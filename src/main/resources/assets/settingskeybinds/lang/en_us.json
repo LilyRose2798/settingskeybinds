@@ -1,0 +1,12 @@
+{
+  "category.settingskeybinds": "Settings Keybinds",
+  "key.settingskeybinds.guiscale.decrease": "GUI Scale Decrease",
+  "key.settingskeybinds.guiscale.increase": "GUI Scale Increase",
+  "key.settingskeybinds.guiscale.0": "GUI Scale Auto",
+  "key.settingskeybinds.guiscale.1": "GUI Scale 1",
+  "key.settingskeybinds.guiscale.2": "GUI Scale 2",
+  "key.settingskeybinds.guiscale.3": "GUI Scale 3",
+  "key.settingskeybinds.guiscale.4": "GUI Scale 4",
+  "key.settingskeybinds.guiscale.5": "GUI Scale 5",
+  "settingskeybinds.guiscale.set": "Set GUI Scale to %s"
+}

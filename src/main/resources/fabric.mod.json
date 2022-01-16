@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "settingskeybinds",
+  "version": "${version}",
+  "name": "Settings Keybinds",
+  "description": "Adds key bindings to change Minecraft settings",
+  "authors": [
+    "LilyRose2798"
+  ],
+  "contact": {
+    "homepage": "https://github.com/LilyRose2798/settingskeybinds",
+    "sources": "https://github.com/LilyRose2798/settingskeybinds"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "lgbt.lily.settingskeybinds.SettingsKeybinds"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabric-key-binding-api-v1": "*",
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {}
+}
