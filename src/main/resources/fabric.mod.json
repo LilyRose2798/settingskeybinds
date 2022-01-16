@@ -13,6 +13,7 @@
     "issues": "https://github.com/LilyRose2798/settingskeybinds/issues"
   },
   "license": "MIT",
+  "icon": "assets/settingskeybinds/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
