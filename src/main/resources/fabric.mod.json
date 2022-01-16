@@ -3,7 +3,7 @@
   "id": "settingskeybinds",
   "version": "${version}",
   "name": "Settings Keybinds",
-  "description": "Adds key bindings to change Minecraft settings",
+  "description": "Adds key bindings to change Minecraft settings.",
   "authors": [
     "LilyRose2798"
   ],

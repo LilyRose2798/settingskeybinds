@@ -43,13 +43,14 @@ public class SettingsKeybinds implements ModInitializer {
 				if (client.options.guiScale < MAX_GUI_SCALE)
 					setGuiScale(client, client.options.guiScale + 1);
 			} else {
-				guiScaleKeyBindings.forEach((key, value) -> {
-					if (value.wasPressed())
-						setGuiScale(client, key);
+				guiScaleKeyBindings.forEach((n, kb) -> {
+					if (kb.wasPressed())
+						setGuiScale(client, n);
 				});
 			}
 		});
-		LOGGER.info("Registered key bindings");
+
+		LOGGER.info("Registered settings keybinds");
 	}
 
 	private void setGuiScale(MinecraftClient client, int guiScale) {

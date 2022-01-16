@@ -1,2 +1,2 @@
 # Settings Keybinds
-Adds key bindings to change Minecraft settings
+Adds key bindings to change Minecraft settings.
