@@ -9,7 +9,8 @@
   ],
   "contact": {
     "homepage": "https://github.com/LilyRose2798/settingskeybinds",
-    "sources": "https://github.com/LilyRose2798/settingskeybinds"
+    "sources": "https://github.com/LilyRose2798/settingskeybinds",
+    "issues": "https://github.com/LilyRose2798/settingskeybinds/issues"
   },
   "license": "MIT",
   "environment": "*",
