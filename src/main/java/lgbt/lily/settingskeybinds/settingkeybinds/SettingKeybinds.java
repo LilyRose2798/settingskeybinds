@@ -80,7 +80,7 @@ public abstract class SettingKeybinds<T> {
                     else valueSet.remove(value);
                     setSettingValues(valueSet.stream().toList());
                 })
-                .requireRestart().build());
+                .setDefaultValue(true).requireRestart().build());
         return subBuilder.build();
     }
 
