@@ -33,6 +33,11 @@ public class EnumSettingKeybinds<T extends Enum<T>> extends SettingKeybinds<T> {
     }
 
     @Override
+    public String getSettingValueKey(T settingValue) {
+        return settingValue.name();
+    }
+
+    @Override
     public void readFromConfig(SettingKeybindsConfig config) {
         setSettingValuesByName(config.enumSettingValues);
     }

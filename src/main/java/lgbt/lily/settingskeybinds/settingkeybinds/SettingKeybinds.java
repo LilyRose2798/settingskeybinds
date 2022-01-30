@@ -36,9 +36,13 @@ public abstract class SettingKeybinds<T> {
         this.settingValues = settingValues;
     }
 
+    public String getSettingValueKey(T settingValue) {
+        return settingValue.toString();
+    }
+
     public void init() {
         valueKeyBindings = settingValues.stream().collect(Collectors.toMap(Function.identity(), n ->
-            Utils.getKeyBinding(settingKey, n.toString())));
+            Utils.getKeyBinding(settingKey, getSettingValueKey(n))));
         valueKeyBindings.values().forEach(KeyBindingHelper::registerKeyBinding);
     }
 
