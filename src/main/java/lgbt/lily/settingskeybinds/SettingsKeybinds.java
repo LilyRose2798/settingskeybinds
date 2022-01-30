@@ -1,62 +1,120 @@
 package lgbt.lily.settingskeybinds;
 
-import net.fabricmc.api.ModInitializer;
+import lgbt.lily.settingskeybinds.config.SettingsKeybindsConfig;
+import lgbt.lily.settingskeybinds.settingkeybinds.*;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.option.*;
+import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.world.Difficulty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.glfw.GLFW;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.Arrays;
+import java.util.List;
 
-public class SettingsKeybinds implements ModInitializer {
+public class SettingsKeybinds implements ClientModInitializer {
+	public static final String MODID = "settingskeybinds";
+	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-	public static final Logger LOGGER = LogManager.getLogger("settingskeybinds");
-	public static final int MIN_GUI_SCALE = 0;
-	public static final int MAX_GUI_SCALE = 5;
+	public static final SettingKeybinds<?>[] SETTING_KEYBINDS = new SettingKeybinds[] {
+		new BooleanSettingKeybinds("autoJump",
+			o -> o.autoJump,
+			(o, x) -> o.autoJump = x),
+		new BooleanSettingKeybinds("viewBobbing",
+			o -> o.bobView,
+			(o, x) -> o.bobView = x),
+		new BooleanSettingKeybinds("showSubtitles",
+			o -> o.showSubtitles,
+			(o, x) -> o.showSubtitles = x),
+		new BooleanSettingKeybinds("advancedItemTooltips",
+			o -> o.advancedItemTooltips,
+			(o, x) -> o.advancedItemTooltips = x),
+		new BooleanSettingKeybinds("heldItemTooltips",
+			o -> o.heldItemTooltips,
+			(o, x) -> o.heldItemTooltips = x),
+		new BooleanSettingKeybinds("sneak",
+			o -> o.sneakToggled,
+			(o, x) -> o.sneakToggled = x),
+		new BooleanSettingKeybinds("sprint",
+			o -> o.sprintToggled,
+			(o, x) -> o.sprintToggled = x),
+		new IntegerSettingKeybinds("guiScale",
+			o -> o.guiScale,
+			(o, x) -> {
+				o.guiScale = x;
+				MinecraftClient.getInstance().onResolutionChanged();
+			},
+			0, 5, 1, true),
+		new DoubleSettingKeybinds("renderDistance", Option.RENDER_DISTANCE,
+			1.0, List.of(4.0, 8.0, 12.0, 16.0)),
+		new DoubleSettingKeybinds("simulationDistance", Option.SIMULATION_DISTANCE,
+			1.0, List.of(5.0, 8.0, 12.0, 16.0)),
+		new DoubleSettingKeybinds("gamma", Option.GAMMA,
+			0.05, List.of(0.0, 0.25, 0.5, 0.75, 1.0)),
+		new DoubleSettingKeybinds("framerateLimit", Option.FRAMERATE_LIMIT,
+			10.0, Arrays.asList(30.0, 60.0, 120.0, 240.0, 260.0)),
+		new DoubleSettingKeybinds("fov", Option.FOV,
+			1.0, List.of(70.0, 90.0, 110.0)),
+		new DoubleSettingKeybinds("sensitivity", Option.SENSITIVITY,
+			0.05, List.of(0.3, 0.4, 0.5, 0.6, 0.7)),
+		new EnumSettingKeybinds<>("attackIndicator",
+			o -> o.attackIndicator,
+			(o, x) -> o.attackIndicator = x,
+			x -> new TranslatableText(x.getTranslationKey()),
+			AttackIndicator::values, AttackIndicator.class),
+		new EnumSettingKeybinds<>("graphics",
+			o -> o.graphicsMode,
+			(o, x) -> o.graphicsMode = x,
+			x -> new TranslatableText(x.getTranslationKey()),
+			GraphicsMode::values, GraphicsMode.class),
+		new EnumSettingKeybinds<>("particles",
+			o -> o.particles,
+			(o, x) -> o.particles = x,
+			x -> new TranslatableText(x.getTranslationKey()),
+			ParticlesMode::values, ParticlesMode.class),
+		new EnumSettingKeybinds<>("difficulty",
+			o -> o.difficulty,
+			(o, x) -> {
+				IntegratedServer s = MinecraftClient.getInstance().getServer();
+				if (s != null) s.setDifficulty(x, true);
+			},
+			Difficulty::getTranslatableName,
+			Difficulty::values, Difficulty.class),
+	};
+
+	public static SettingsKeybindsConfig CONFIG;
+
+	public static void loadConfig() {
+		CONFIG = AutoConfig.getConfigHolder(SettingsKeybindsConfig.class).getConfig();
+		CONFIG.writeToSettingKeybinds(SETTING_KEYBINDS);
+	}
+
+	public static void saveConfig() {
+		CONFIG.readFromSettingKeybinds(SETTING_KEYBINDS);
+		AutoConfig.getConfigHolder(SettingsKeybindsConfig.class).save();
+	}
 
 	@Override
-	public void onInitialize() {
-		final KeyBinding guiScaleDecreaseKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.settingskeybinds.guiscale.decrease", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G,
-			"category.settingskeybinds"));
-		final KeyBinding guiScaleIncreaseKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.settingskeybinds.guiscale.increase", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H,
-			"category.settingskeybinds"));
-		final Map<Integer, KeyBinding> guiScaleKeyBindings = IntStream.rangeClosed(MIN_GUI_SCALE, MAX_GUI_SCALE)
-			.boxed().collect(Collectors.toMap(Function.identity(), n -> KeyBindingHelper.registerKeyBinding(
-				new KeyBinding(String.format("key.settingskeybinds.guiscale.%d", n),
-					InputUtil.Type.KEYSYM, -1, "category.settingskeybinds"))));
+	public void onInitializeClient() {
+		AutoConfig.register(SettingsKeybindsConfig.class, Toml4jConfigSerializer::new);
+		loadConfig();
+		saveConfig();
+
+		for (SettingKeybinds<?> settingKeybinds : SETTING_KEYBINDS) {
+			if (settingKeybinds.isEnabled()) settingKeybinds.init();
+		}
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (guiScaleDecreaseKeyBinding.wasPressed()) {
-				if (client.options.guiScale > MIN_GUI_SCALE)
-					setGuiScale(client, client.options.guiScale - 1);
-			} else if (guiScaleIncreaseKeyBinding.wasPressed()) {
-				if (client.options.guiScale < MAX_GUI_SCALE)
-					setGuiScale(client, client.options.guiScale + 1);
-			} else {
-				guiScaleKeyBindings.forEach((n, kb) -> {
-					if (kb.wasPressed())
-						setGuiScale(client, n);
-				});
+			for (SettingKeybinds<?> settingKeybinds : SETTING_KEYBINDS) {
+				if (settingKeybinds.isEnabled() && settingKeybinds.handleTickEvent(client)) return;
 			}
 		});
 
-		LOGGER.info("Registered settings keybinds");
-	}
-
-	private void setGuiScale(MinecraftClient client, int guiScale) {
-		client.options.guiScale = guiScale;
-		client.onResolutionChanged();
-		if (client.player != null)
-			client.player.sendMessage(new TranslatableText("settingskeybinds.guiscale.set", guiScale), false);
+		LOGGER.info("Initialized");
 	}
 }
