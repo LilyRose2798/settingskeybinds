@@ -27,6 +27,8 @@ public abstract class SettingKeybinds<T> {
     private final Function<GameOptions, T> getSetting;
     private final BiConsumer<GameOptions, T> setSetting;
     private Map<T, KeyBinding> valueKeyBindings;
+    private static final String LITERAL_VALUE_FORMAT_KEY =
+        Utils.getT9nKey(Utils.T9nType.OUTPUT, "literalValueFormat");
 
     public SettingKeybinds(String settingKey, Function<GameOptions, T> getSetting,
                            BiConsumer<GameOptions, T> setSetting, List<T> settingValues) {
@@ -106,7 +108,7 @@ public abstract class SettingKeybinds<T> {
         if (lang.hasTranslation(valueKey)) return new TranslatableText(valueKey);
         final String valueKeyBase = Utils.getT9nKey(Utils.T9nType.VALUE, valueStr);
         if (lang.hasTranslation(valueKeyBase)) return new TranslatableText(valueKeyBase);
-        return new LiteralText(valueStr);
+        return new TranslatableText(LITERAL_VALUE_FORMAT_KEY, valueStr);
     }
 
     public T getSetting(MinecraftClient client) {

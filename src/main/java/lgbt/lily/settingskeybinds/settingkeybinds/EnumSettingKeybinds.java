@@ -1,9 +1,13 @@
 package lgbt.lily.settingskeybinds.settingkeybinds;
 
+import lgbt.lily.settingskeybinds.Utils;
 import lgbt.lily.settingskeybinds.config.SettingKeybindsConfig;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
@@ -17,6 +21,7 @@ import java.util.stream.Stream;
 public class EnumSettingKeybinds<T extends Enum<T>> extends SettingKeybinds<T> {
     private final Function<T, Text> getValueText;
     private final Class<T> clazz;
+    private KeyBinding cycleKeyBinding;
 
     public EnumSettingKeybinds(String settingKey, Function<GameOptions, T> getSetting,
                                BiConsumer<GameOptions, T> setSetting, Function<T, Text> getValueText,
@@ -30,6 +35,13 @@ public class EnumSettingKeybinds<T extends Enum<T>> extends SettingKeybinds<T> {
         super(settingKey, getSetting, setSetting, settingValues);
         this.clazz = clazz;
         this.getValueText = getValueText;
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        cycleKeyBinding = Utils.getKeyBinding(getSettingKey(), "cycle");
+        KeyBindingHelper.registerKeyBinding(cycleKeyBinding);
     }
 
     @Override
@@ -61,7 +73,7 @@ public class EnumSettingKeybinds<T extends Enum<T>> extends SettingKeybinds<T> {
         try {
             return getValueT9nText(T.valueOf(clazz, name));
         } catch (IllegalArgumentException e) {
-            return new LiteralText(name);
+            return super.getValueT9nText(name);
         }
     }
 
@@ -77,5 +89,25 @@ public class EnumSettingKeybinds<T extends Enum<T>> extends SettingKeybinds<T> {
                 return Stream.empty();
             }
         }).collect(Collectors.toList()));
+    }
+
+    public T getNextValue(T value) {
+        int index = value.ordinal();
+        int nextIndex = index + 1;
+        T[] values = clazz.getEnumConstants();
+        nextIndex %= values.length;
+        return values[nextIndex];
+    }
+
+    public boolean checkCycleKeyBinding(MinecraftClient client) {
+        if (!cycleKeyBinding.wasPressed()) return false;
+        setSetting(client, getNextValue(getSetting(client)));
+        return true;
+    }
+
+    @Override
+    public boolean handleTickEvent(MinecraftClient client) {
+        return checkCycleKeyBinding(client) ||
+            super.handleTickEvent(client);
     }
 }
