@@ -27,11 +27,14 @@
     "settingskeybinds.mixins.json"
   ],
   "depends": {
-    "fabric-key-binding-api-v1": "*",
-    "fabricloader": ">=0.11.3",
-    "fabric": "*",
+    "cloth-config2": ">=6.0.39",
+    "fabric-key-binding-api-v1": ">=1.0.1",
+    "fabric-lifecycle-events-v1": ">=1.4.1",
+    "fabricloader": ">=0.12.3",
     "minecraft": "1.18.x",
     "java": ">=17"
   },
-  "suggests": {}
+  "suggests": {
+    "modmenu": ">=3.0.1"
+  }
 }
