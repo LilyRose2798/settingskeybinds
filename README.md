@@ -1,6 +1,6 @@
 # Settings Keybinds
 
-<a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/requires-fabric-api.png" alt="Requires Fabric API" height="72" /></a> <a href="https://www.curseforge.com/minecraft/mc-mods/cloth-config"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/requires-cloth-config.png" alt="Requires Cloth Config" height="72" /></a> <a href="https://www.curseforge.com/minecraft/mc-mods/modmenu"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/suggests-mod-menu.png" alt="Suggests Mod Menu" height="72" /></a>
+<p><a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/requires-fabric-api.png" alt="Requires Fabric API" width="172" /></a> <a href="https://www.curseforge.com/minecraft/mc-mods/cloth-config"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/requires-cloth-config.png" alt="Requires Cloth Config" width="172" /></a> <a href="https://www.curseforge.com/minecraft/mc-mods/modmenu"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/suggests-mod-menu.png" alt="Suggests Mod Menu" width="172" /></a></p>
 
 Adds key bindings to change Minecraft settings.
 
