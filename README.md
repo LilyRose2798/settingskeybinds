@@ -1,4 +1,7 @@
 # Settings Keybinds
+
+<a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/requires-fabric-api.png" alt="Requires Fabric API" height="72" /></a> <a href="https://www.curseforge.com/minecraft/mc-mods/cloth-config"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/requires-cloth-config.png" alt="Requires Cloth Config" height="72" /></a> <a href="https://www.curseforge.com/minecraft/mc-mods/modmenu"><img src="https://github.com/LilyRose2798/settingskeybinds/raw/1.18/banners/suggests-mod-menu.png" alt="Suggests Mod Menu" height="72" /></a>
+
 Adds key bindings to change Minecraft settings.
 
 This allows settings that were previously only configurable through the settings screen to be changed in game through the use of a key binding that can be set by the user, saving time going back and forth through menus in the case of needing to quickly switch settings back and forth.
