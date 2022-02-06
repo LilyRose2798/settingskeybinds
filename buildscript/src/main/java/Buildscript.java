@@ -30,7 +30,7 @@ public class Buildscript extends FabricProject {
 
     @Override
     public String getVersion() {
-        return "2.3.0";
+        return "2.3.1";
     }
 
     @Override
