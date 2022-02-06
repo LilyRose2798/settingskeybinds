@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "settingskeybinds",
-  "version": "${version}",
+  "version": "2.3.0",
   "name": "Settings Keybinds",
   "description": "Adds key bindings to change Minecraft settings.",
   "authors": [
